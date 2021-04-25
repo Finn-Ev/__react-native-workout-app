@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text } from '../utils/Themed';
+import { Text } from '../utils/DefaultComponents';
 import { StyleSheet, View } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { HomeTabParamList } from '../types';
+import { HomeTabParamList } from '../types/navigation.types';
+import Colors from '../constants/Colors';
 
 interface HomeScreenProps {}
 
@@ -17,7 +18,7 @@ const HomeScreen: React.FC<
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, backgroundColor: Colors.background },
 });
 
 export default HomeScreen;

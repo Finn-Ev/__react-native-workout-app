@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { spacing, fontSize } from '../constants';
 import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import { Plan } from '../types';
-import { fontSize, Text } from '../utils/Themed';
+import { Plan } from '../types/data.types';
+import { Text } from '../utils/DefaultComponents';
 
 interface PlanOverviewTileProps {
   plan: Plan;
@@ -14,8 +14,10 @@ const PlanOverviewTile: React.FC<PlanOverviewTileProps> = ({ plan }) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('PlanDetails')}>
-      <View style={{ ...styles.container }}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('PlanDetails', { planId: plan.id })}
+    >
+      <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>{plan.name}</Text>
           <Text>{plan.unitsPerWeek} Einheiten pro Woche </Text>
@@ -28,8 +30,8 @@ const PlanOverviewTile: React.FC<PlanOverviewTileProps> = ({ plan }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    marginTop: 10,
+    padding: spacing.sm,
+    marginTop: spacing.sm,
     backgroundColor: Colors.contentBackground,
   },
   header: {
@@ -40,6 +42,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fontSize.lg,
   },
-  description: { marginTop: 10 },
+  description: {
+    marginTop: spacing.sm,
+  },
 });
 export default PlanOverviewTile;

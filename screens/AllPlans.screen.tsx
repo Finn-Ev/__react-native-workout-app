@@ -3,9 +3,10 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import PlanOverviewTile from '../components/PlanOverviewTile.component';
 import plans from '../data';
-import { PlansTabParamList } from '../types';
+import { PlansTabParamList } from '../types/navigation.types';
 import Colors from '../constants/Colors';
-import { fontSize, Text } from '../utils/Themed';
+import { Text } from '../utils/DefaultComponents';
+import { fontSize, spacing } from '../constants';
 
 interface AllPlansScreenProps {}
 
@@ -25,7 +26,7 @@ const AllPlansScreen: React.FC<
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
+    padding: spacing.content,
     backgroundColor: Colors.background,
   },
   heading: {

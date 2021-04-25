@@ -1,9 +1,9 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { Button, StyleSheet, View } from 'react-native';
-import { Text } from '../utils/Themed';
-import { ActiveWorkoutTabParamList, PlansTabParamList } from '../types';
 import Colors from '../constants/Colors';
+import { ActiveWorkoutTabParamList } from '../types/navigation.types';
+import { Text } from '../utils/DefaultComponents';
 
 interface ActiveWorkoutScreenProps {}
 

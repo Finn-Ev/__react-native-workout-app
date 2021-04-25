@@ -11,7 +11,9 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { fontSize } from '../constants';
 import Colors from '../constants/Colors';
+import plans from '../data';
 import ActiveWorkoutScreen from '../screens/ActiveWorkout.screen';
 import AllPlansScreen from '../screens/AllPlans.screen';
 import HomeScreen from '../screens/Home.screen';
@@ -22,7 +24,7 @@ import {
   BottomTabParamList,
   HomeTabParamList,
   PlansTabParamList,
-} from '../types';
+} from '../types/navigation.types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -90,7 +92,7 @@ function HomeNavigator() {
     <HomeTabStack.Navigator
       screenOptions={() => ({
         headerBackTitle: 'Zurück',
-        headerTitleStyle: { fontSize: 18 },
+        headerTitleStyle: { fontSize: fontSize.lg },
       })}
     >
       <HomeTabStack.Screen
@@ -124,16 +126,21 @@ const PlansTabStack = createStackNavigator<PlansTabParamList>();
 
 function PlansNavigator() {
   return (
-    <PlansTabStack.Navigator>
+    <PlansTabStack.Navigator screenOptions={{ headerBackTitle: 'Zurück' }}>
       <PlansTabStack.Screen
         name="AllPlans"
         component={AllPlansScreen}
-        options={{ headerTitle: 'Trainingspläne' }}
+        options={{
+          headerTitle: 'Trainingspläne',
+          headerTitleStyle: { fontSize: fontSize.lg },
+        }}
       />
       <PlansTabStack.Screen
         name="PlanDetails"
         component={PlanDetailsScreen}
-        options={{ headerTitle: 'Push Pull Legs' }}
+        options={({ route: { params } }) => ({
+          headerTitle: plans.find(plan => params.planId === plan.id)?.name,
+        })}
       />
     </PlansTabStack.Navigator>
   );

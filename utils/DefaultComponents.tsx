@@ -48,10 +48,3 @@ export function SafeAreaView(props: DefaultSafeAreaView['props']) {
     />
   );
 }
-
-export const fontSize = {
-  sm: 10,
-  md: 14,
-  lg: 18,
-  xl: 24,
-};

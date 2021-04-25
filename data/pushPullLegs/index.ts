@@ -11,7 +11,7 @@ import week9 from './block2/week9';
 
 export default {
   name: 'Push Pull Legs',
-  abbreviation: 'ppl',
+  id: 'ppl',
   unitsPerWeek: 6,
   description: 'Klassischer 3er-Split ',
   workouts: [

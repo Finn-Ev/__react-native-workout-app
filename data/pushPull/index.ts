@@ -11,7 +11,7 @@ import week9 from './block2/week9';
 
 export default {
   name: 'Push Pull',
-  abbreviation: 'pp',
+  id: 'pp',
   unitsPerWeek: 4,
   description: 'Unterteilung in Muskelfunktion',
   workouts: [
