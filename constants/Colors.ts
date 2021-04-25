@@ -1,19 +1,44 @@
-const tintColorLight = '#2f95dc';
-const tintColorDark = '#fff';
+import { Theme } from '@react-navigation/native';
+
+const theme = {
+  text: '#eee',
+  background: '#000',
+  contentBackground: '#222',
+  navigationBackground: 'teal',
+  tintColor: 'white',
+};
 
 export default {
-  light: {
-    text: '#000',
-    background: '#fff',
-    tint: tintColorLight,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorLight,
-  },
+  text: theme.text,
+  background: theme.background,
+  contentBackground: theme.contentBackground,
+  tint: theme.tintColor,
+  accent: '#c21010',
+  tabIconDefault: '#eee',
+  tabIconSelected: theme.tintColor,
+};
+
+export const NavigationColorTheme: { dark: Theme; light: Theme } = {
   dark: {
-    text: '#fff',
-    background: '#000',
-    tint: tintColorDark,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorDark,
+    dark: true,
+    colors: {
+      background: theme.navigationBackground,
+      border: theme.navigationBackground,
+      card: theme.navigationBackground,
+      notification: '#fff',
+      primary: theme.text,
+      text: theme.text,
+    },
+  },
+  light: {
+    dark: false,
+    colors: {
+      background: theme.navigationBackground,
+      border: theme.navigationBackground,
+      card: theme.navigationBackground,
+      notification: '#fff',
+      primary: theme.text,
+      text: theme.text,
+    },
   },
 };

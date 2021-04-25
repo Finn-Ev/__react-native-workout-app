@@ -3,76 +3,152 @@
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 
-import { Ionicons } from '@expo/vector-icons';
+import {
+  FontAwesome5,
+  Ionicons,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-
 import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import ActiveWorkoutScreen from '../screens/ActiveWorkout.screen';
+import AllPlansScreen from '../screens/AllPlans.screen';
+import HomeScreen from '../screens/Home.screen';
+import PlanDetailsScreen from '../screens/PlanDetails.screen';
+import SettingsScreen from '../screens/Settings.screen';
+import {
+  ActiveWorkoutTabParamList,
+  BottomTabParamList,
+  HomeTabParamList,
+  PlansTabParamList,
+} from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="Home"
+      tabBarOptions={{ activeTintColor: Colors.tint }}
+    >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Home"
+        component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarLabel: () => null,
+          tabBarIcon: ({ color }) => (
+            <Ionicons
+              name="home"
+              size={30}
+              style={{ marginBottom: -3 }}
+              color={color}
+            />
+          ),
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="Plans"
+        component={PlansNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarLabel: () => null,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="clipboard-list"
+              size={30}
+              style={{ marginBottom: -3 }}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="ActiveWorkout"
+        component={ActiveWorkoutNavigator}
+        options={{
+          tabBarLabel: () => null,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5
+              name="dumbbell"
+              size={28}
+              style={{ marginBottom: -3 }}
+              color={color}
+            />
+          ),
         }}
       />
     </BottomTab.Navigator>
   );
 }
 
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-}
-
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const HomeTabStack = createStackNavigator<HomeTabParamList>();
 
-function TabOneNavigator() {
+function HomeNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+    <HomeTabStack.Navigator
+      screenOptions={() => ({
+        headerBackTitle: 'Zurück',
+        headerTitleStyle: { fontSize: 18 },
+      })}
+    >
+      <HomeTabStack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={({ navigation }) => ({
+          headerTitle: 'Workout-App',
+          headerRight: ({ tintColor }) => (
+            <Ionicons
+              name={'settings-outline'}
+              color={'white'}
+              style={{ right: 10 }}
+              size={24}
+              onPress={() => navigation.navigate('Settings')}
+            />
+          ),
+        })}
       />
-    </TabOneStack.Navigator>
+      <HomeTabStack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          headerTitle: 'Einstellungen',
+        }}
+      />
+    </HomeTabStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const PlansTabStack = createStackNavigator<PlansTabParamList>();
 
-function TabTwoNavigator() {
+function PlansNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+    <PlansTabStack.Navigator>
+      <PlansTabStack.Screen
+        name="AllPlans"
+        component={AllPlansScreen}
+        options={{ headerTitle: 'Trainingspläne' }}
       />
-    </TabTwoStack.Navigator>
+      <PlansTabStack.Screen
+        name="PlanDetails"
+        component={PlanDetailsScreen}
+        options={{ headerTitle: 'Push Pull Legs' }}
+      />
+    </PlansTabStack.Navigator>
+  );
+}
+
+const ActiveWorkoutTabStack = createStackNavigator<ActiveWorkoutTabParamList>();
+
+function ActiveWorkoutNavigator() {
+  return (
+    <ActiveWorkoutTabStack.Navigator>
+      <ActiveWorkoutTabStack.Screen
+        name="ActiveWorkout"
+        component={ActiveWorkoutScreen}
+        options={{ headerTitle: 'Legs #1' }}
+      />
+    </ActiveWorkoutTabStack.Navigator>
   );
 }
