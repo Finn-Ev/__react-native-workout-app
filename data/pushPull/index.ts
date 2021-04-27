@@ -1,3 +1,4 @@
+import { Plan } from '../../types/data.types';
 import week1 from './block1/week1';
 import week2 from './block1/week2';
 import week3 from './block1/week3';
@@ -9,11 +10,12 @@ import week7 from './block2/week7';
 import week8 from './block2/week8';
 import week9 from './block2/week9';
 
-export default {
+const pushPull: Plan = {
   name: 'Push Pull',
   id: 'pp',
   unitsPerWeek: 4,
-  description: 'Unterteilung in Muskelfunktion',
+  shortDescription: 'Unterteilung in Muskelfunktion',
+  description: 'Unterteilung in Muskelfunktion. Viele weitere Infos...',
   workouts: [
     ...week1,
     ...week2,
@@ -27,3 +29,5 @@ export default {
     ...week10_deload,
   ],
 };
+
+export default pushPull;

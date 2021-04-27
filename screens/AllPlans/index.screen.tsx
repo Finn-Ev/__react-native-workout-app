@@ -1,12 +1,13 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import PlanOverviewTile from '../components/PlanOverviewTile.component';
-import plans from '../data';
-import { PlansTabParamList } from '../types/navigation.types';
-import Colors from '../constants/Colors';
-import { Text } from '../utils/DefaultComponents';
-import { fontSize, spacing } from '../constants';
+import PlanOverviewTile from './PlanTile.component';
+import plans from '../../data';
+import { PlansTabParamList } from '../../types/navigation.types';
+import Colors from '../../constants/Colors';
+import { Text } from '../../utils/styles/DefaultComponents';
+import { fontSize, spacing } from '../../constants';
+import { defaultScreenStyles } from '../../utils/styles/mixins';
 
 interface AllPlansScreenProps {}
 
@@ -24,11 +25,8 @@ const AllPlansScreen: React.FC<
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: spacing.content,
-    backgroundColor: Colors.background,
-  },
+  ...defaultScreenStyles,
+
   heading: {
     fontSize: fontSize.md,
   },

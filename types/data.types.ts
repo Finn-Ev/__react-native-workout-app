@@ -2,6 +2,7 @@ export interface Plan {
   name: string;
   id: string;
   unitsPerWeek: number;
+  shortDescription: string;
   description: string;
   workouts: Workout[];
 }

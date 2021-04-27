@@ -11,13 +11,14 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { View } from 'react-native';
 import { fontSize } from '../constants';
 import Colors from '../constants/Colors';
 import plans from '../data';
 import ActiveWorkoutScreen from '../screens/ActiveWorkout.screen';
-import AllPlansScreen from '../screens/AllPlans.screen';
+import AllPlansScreen from '../screens/AllPlans/index.screen';
 import HomeScreen from '../screens/Home.screen';
-import PlanDetailsScreen from '../screens/PlanDetails.screen';
+import PlanDetailsScreen from '../screens/PlanDetails/index.screen';
 import SettingsScreen from '../screens/Settings.screen';
 import {
   ActiveWorkoutTabParamList,
@@ -89,36 +90,38 @@ const HomeTabStack = createStackNavigator<HomeTabParamList>();
 
 function HomeNavigator() {
   return (
-    <HomeTabStack.Navigator
-      screenOptions={() => ({
-        headerBackTitle: 'Zurück',
-        headerTitleStyle: { fontSize: fontSize.lg },
-      })}
-    >
-      <HomeTabStack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={({ navigation }) => ({
-          headerTitle: 'Workout-App',
-          headerRight: ({ tintColor }) => (
-            <Ionicons
-              name={'settings-outline'}
-              color={'white'}
-              style={{ right: 10 }}
-              size={24}
-              onPress={() => navigation.navigate('Settings')}
-            />
-          ),
+    <View style={{ backgroundColor: Colors.background, flex: 1 }}>
+      <HomeTabStack.Navigator
+        screenOptions={() => ({
+          headerBackTitle: 'Zurück',
+          headerTitleStyle: { fontSize: fontSize.lg },
         })}
-      />
-      <HomeTabStack.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          headerTitle: 'Einstellungen',
-        }}
-      />
-    </HomeTabStack.Navigator>
+      >
+        <HomeTabStack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={({ navigation }) => ({
+            headerTitle: 'Workout-App',
+            headerRight: ({ tintColor }) => (
+              <Ionicons
+                name={'settings-outline'}
+                color={'white'}
+                style={{ right: 10 }}
+                size={24}
+                onPress={() => navigation.navigate('Settings')}
+              />
+            ),
+          })}
+        />
+        <HomeTabStack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            headerTitle: 'Einstellungen',
+          }}
+        />
+      </HomeTabStack.Navigator>
+    </View>
   );
 }
 
@@ -126,23 +129,25 @@ const PlansTabStack = createStackNavigator<PlansTabParamList>();
 
 function PlansNavigator() {
   return (
-    <PlansTabStack.Navigator screenOptions={{ headerBackTitle: 'Zurück' }}>
-      <PlansTabStack.Screen
-        name="AllPlans"
-        component={AllPlansScreen}
-        options={{
-          headerTitle: 'Trainingspläne',
-          headerTitleStyle: { fontSize: fontSize.lg },
-        }}
-      />
-      <PlansTabStack.Screen
-        name="PlanDetails"
-        component={PlanDetailsScreen}
-        options={({ route: { params } }) => ({
-          headerTitle: plans.find(plan => params.planId === plan.id)?.name,
-        })}
-      />
-    </PlansTabStack.Navigator>
+    <View style={{ backgroundColor: Colors.background, flex: 1 }}>
+      <PlansTabStack.Navigator screenOptions={{ headerBackTitle: 'Zurück' }}>
+        <PlansTabStack.Screen
+          name="AllPlans"
+          component={AllPlansScreen}
+          options={{
+            headerTitle: 'Trainingspläne',
+            headerTitleStyle: { fontSize: fontSize.lg },
+          }}
+        />
+        <PlansTabStack.Screen
+          name="PlanDetails"
+          component={PlanDetailsScreen}
+          options={({ route: { params } }) => ({
+            headerTitle: plans.find(plan => params.planId === plan.id)?.name,
+          })}
+        />
+      </PlansTabStack.Navigator>
+    </View>
   );
 }
 

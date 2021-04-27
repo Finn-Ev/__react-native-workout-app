@@ -3,7 +3,8 @@ import React from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 import Colors from '../constants/Colors';
 import { ActiveWorkoutTabParamList } from '../types/navigation.types';
-import { Text } from '../utils/DefaultComponents';
+import { Text } from '../utils/styles/DefaultComponents';
+import { defaultScreenStyles } from '../utils/styles/mixins';
 
 interface ActiveWorkoutScreenProps {}
 
@@ -24,10 +25,7 @@ const ActiveWorkoutScreen: React.FC<
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
+  ...defaultScreenStyles,
 });
 
 export default ActiveWorkoutScreen;

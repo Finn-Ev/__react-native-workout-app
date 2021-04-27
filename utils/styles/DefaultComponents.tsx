@@ -6,7 +6,7 @@ import {
   Text as DefaultText,
   View as DefaultView,
 } from 'react-native';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 
 const color = Colors.text;
 const backgroundColor = Colors.background;

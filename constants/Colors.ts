@@ -6,6 +6,7 @@ const theme = {
   contentBackground: '#222',
   navigationBackground: 'teal',
   tintColor: 'white',
+  accent: 'teal',
 };
 
 export default {
@@ -13,7 +14,7 @@ export default {
   background: theme.background,
   contentBackground: theme.contentBackground,
   tint: theme.tintColor,
-  accent: '#c21010',
+  accent: theme.accent,
   tabIconDefault: '#eee',
   tabIconSelected: theme.tintColor,
 };

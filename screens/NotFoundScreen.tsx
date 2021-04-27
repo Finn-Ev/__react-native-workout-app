@@ -1,6 +1,8 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { fontSize, spacing } from '../constants';
+import Colors from '../constants/Colors';
 
 import { RootStackParamList } from '../types/navigation.types';
 
@@ -9,12 +11,12 @@ export default function NotFoundScreen({
 }: StackScreenProps<RootStackParamList, 'NotFound'>) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>This screen doesn't exist.</Text>
+      <Text style={styles.title}>Dieser Screen wurde nicht gefunden</Text>
       <TouchableOpacity
         onPress={() => navigation.replace('Root')}
         style={styles.link}
       >
-        <Text style={styles.linkText}>Go to home screen!</Text>
+        <Text style={styles.linkText}>Zurück zum Startbildschirm</Text>
       </TouchableOpacity>
     </View>
   );
@@ -23,21 +25,23 @@ export default function NotFoundScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: spacing.content,
   },
   title: {
-    fontSize: 20,
+    fontSize: fontSize.lg,
     fontWeight: 'bold',
+    color: Colors.text,
   },
   link: {
     marginTop: 15,
     paddingVertical: 15,
   },
   linkText: {
-    fontSize: 14,
-    color: '#2e78b7',
+    fontSize: fontSize.md,
+    color: Colors.text,
+    textDecorationLine: 'underline',
   },
 });
