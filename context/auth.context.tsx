@@ -105,7 +105,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  const value = {
+  const values = {
     currentUser,
     isAuthenticated: !!currentUser?.email,
     login,
@@ -118,7 +118,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={values}>
       {!loading && children}
     </AuthContext.Provider>
   );

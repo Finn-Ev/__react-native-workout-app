@@ -17,6 +17,7 @@ export type BottomTabParamList = {
 export type HomeTabParamList = {
   Home: undefined;
   Settings: undefined;
+  AllPlans: undefined;
 };
 
 export type PlansTabParamList = {

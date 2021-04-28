@@ -1,8 +1,3 @@
-/**
- * Learn more about createBottomTabNavigator:
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-
 import {
   FontAwesome5,
   Ionicons,
@@ -84,8 +79,6 @@ export default function BottomTabNavigator() {
   );
 }
 
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const HomeTabStack = createStackNavigator<HomeTabParamList>();
 
 function HomeNavigator() {
@@ -102,7 +95,7 @@ function HomeNavigator() {
           component={HomeScreen}
           options={({ navigation }) => ({
             headerTitle: 'Workout-App',
-            headerRight: ({ tintColor }) => (
+            headerRight: () => (
               <Ionicons
                 name={'settings-outline'}
                 color={'white'}
@@ -130,7 +123,10 @@ const PlansTabStack = createStackNavigator<PlansTabParamList>();
 function PlansNavigator() {
   return (
     <View style={{ backgroundColor: Colors.background, flex: 1 }}>
-      <PlansTabStack.Navigator screenOptions={{ headerBackTitle: 'Zurück' }}>
+      <PlansTabStack.Navigator
+        initialRouteName={'AllPlans'}
+        screenOptions={{ headerBackTitle: 'Zurück' }}
+      >
         <PlansTabStack.Screen
           name="AllPlans"
           component={AllPlansScreen}
@@ -155,12 +151,14 @@ const ActiveWorkoutTabStack = createStackNavigator<ActiveWorkoutTabParamList>();
 
 function ActiveWorkoutNavigator() {
   return (
-    <ActiveWorkoutTabStack.Navigator>
-      <ActiveWorkoutTabStack.Screen
-        name="ActiveWorkout"
-        component={ActiveWorkoutScreen}
-        options={{ headerTitle: 'Legs #1' }}
-      />
-    </ActiveWorkoutTabStack.Navigator>
+    <View style={{ backgroundColor: Colors.background, flex: 1 }}>
+      <ActiveWorkoutTabStack.Navigator>
+        <ActiveWorkoutTabStack.Screen
+          name="ActiveWorkout"
+          component={ActiveWorkoutScreen}
+          options={{ headerTitle: 'Legs #1' }}
+        />
+      </ActiveWorkoutTabStack.Navigator>
+    </View>
   );
 }

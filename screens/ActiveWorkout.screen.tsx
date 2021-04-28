@@ -15,7 +15,6 @@ const ActiveWorkoutScreen: React.FC<
   return (
     <View style={styles.container}>
       <Text>ActiveWorkout</Text>
-
       <Button
         onPress={() => navigation.navigate('Home')}
         title={'Home'}

@@ -1,14 +1,15 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, View } from 'react-native';
+import Button from '../../components/Button.component';
+import { fontSize, spacing } from '../../constants';
 import Colors from '../../constants/Colors';
+import { usePlanContext } from '../../context/plan.context';
 import plans from '../../data';
+import { Workout } from '../../types/data.types';
 import { PlansTabParamList } from '../../types/navigation.types';
 import { Text } from '../../utils/styles/DefaultComponents';
-import { Button } from 'react-native-elements';
-import { fontSize, spacing } from '../../constants';
 import { defaultScreenStyles } from '../../utils/styles/mixins';
-import { Workout } from '../../types/data.types';
 import WorkoutTile from './WorkoutTile.component';
 
 interface PlanDetailsScreenProps {}
@@ -24,33 +25,69 @@ const PlanDetailsScreen: React.FC<
     workout => workout.week === 1
   );
 
-  function setActivePlan() {
-    console.log(`${selectedPlan?.id} Plan is selected`);
+  const {
+    activePlanId,
+    setPlanAsActive,
+    increaseCurrentWorkoutIndex,
+  } = usePlanContext();
+
+  if (
+    activePlanId === undefined ||
+    setPlanAsActive === undefined ||
+    increaseCurrentWorkoutIndex === undefined
+  ) {
+    return null;
   }
+
+  const handleActivatePlanRequest = () => {
+    if (activePlanId) {
+      Alert.alert(
+        'Achtung',
+        'Wenn du diesen Plan aktivierst, geht der Fortschritt im aktuellen Plan verloren. Bist du sicher?',
+        [
+          {
+            text: 'Abbrechen',
+            onPress: () => {},
+            style: 'cancel',
+          },
+          {
+            text: 'Plan aktivieren',
+            onPress: () => setPlanAsActive(selectedPlan.id),
+          },
+        ]
+      );
+    } else {
+      setPlanAsActive(selectedPlan.id);
+    }
+  };
+
+  const MainButton = () =>
+    activePlanId === selectedPlan.id ? (
+      <Button
+        title={'Nächstes Workout starten'}
+        // TODO: onPress={() => WORKOUT STARTEN}
+        onPress={increaseCurrentWorkoutIndex}
+      />
+    ) : (
+      <Button
+        title={'Als aktiv festlegen'}
+        onPress={handleActivatePlanRequest}
+      />
+    );
+
   return (
     <ScrollView style={styles.container}>
-      <View>
-        <Text style={styles.title}>{selectedPlan.name}</Text>
-        <Text style={styles.description}>{selectedPlan.description}</Text>
-        <View style={styles.spacer} />
-        <Text style={styles.hint}>Eine Typische Trainingswoche:</Text>
-        {exampleWeek.map(workout => (
-          <WorkoutTile key={workout.name} workout={workout} />
-        ))}
+      <Text style={styles.title}>{selectedPlan.name}</Text>
+      <Text style={styles.description}>{selectedPlan.description}</Text>
+      <MainButton />
+      <View style={styles.spacer} />
+      <Text>Eine Typische Trainingswoche:</Text>
+      {exampleWeek.map(workout => (
+        <WorkoutTile key={workout.name} workout={workout} />
+      ))}
+      <View style={styles.buttonContainer}>
+        <MainButton />
       </View>
-
-      <Button
-        titleStyle={{ color: Colors.text }}
-        containerStyle={{
-          marginTop: spacing.lg,
-          marginBottom: spacing.xl + 10,
-        }}
-        buttonStyle={{
-          backgroundColor: Colors.accent,
-        }}
-        title={'Als aktiv festlegen | Nächstes Workout starten'}
-        onPress={setActivePlan}
-      />
     </ScrollView>
   );
 };
@@ -68,9 +105,12 @@ const styles = StyleSheet.create({
     height: 0.5,
     width: '100%',
     backgroundColor: Colors.text,
-    marginVertical: spacing.md,
+    marginTop: -2,
+    marginBottom: spacing.md,
   },
-  hint: {},
+  buttonContainer: {
+    marginBottom: 20,
+  },
 });
 
 export default PlanDetailsScreen;

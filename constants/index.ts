@@ -7,6 +7,7 @@ export const fontSize = {
 
 export const spacing = {
   content: 12.5,
+  xs: 5,
   sm: 10,
   md: 15,
   lg: 20,
