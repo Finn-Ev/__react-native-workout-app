@@ -16,11 +16,24 @@ interface HomeScreenProps {}
 const HomeScreen: React.FC<
   HomeScreenProps & StackScreenProps<HomeTabParamList, 'Home'>
 > = ({ navigation }) => {
-  const { activePlanId, currentWorkoutIndex, resetPlanData } = usePlanContext();
+  const {
+    activePlanId,
+    currentWorkoutIndex,
+    resetPlanData,
+    isLoading,
+  } = usePlanContext();
 
   const activePlan = data.find(plan => plan.id === activePlanId);
 
   const upcomingWorkout = activePlan?.workouts[currentWorkoutIndex || 0];
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   if (!activePlan)
     return (

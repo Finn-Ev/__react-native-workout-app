@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 type PlanContextType = {
   activePlanId: string;
   currentWorkoutIndex: number;
+  isLoading: boolean;
   setPlanAsActive: (planId: string) => void;
   increaseCurrentWorkoutIndex: () => void;
   decreaseCurrentWorkoutIndex: () => void;
@@ -20,29 +21,29 @@ export const usePlanContext = () => {
 export const PlanProvider: React.FC = ({ children }) => {
   const [activePlanId, setActivePlan] = useState('');
   const [currentWorkoutIndex, setCurrentWorkoutIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const init = async () => {
+    try {
+      setIsLoading(true);
+      const savedActivePlanId = await AsyncStorage.getItem('@activePlanId');
+      if (savedActivePlanId) {
+        setActivePlan(savedActivePlanId);
+      }
+      const savedCurrentWorkoutIndex = await AsyncStorage.getItem(
+        '@currentWorkoutIndex'
+      );
+      if (savedCurrentWorkoutIndex) {
+        setCurrentWorkoutIndex(+savedCurrentWorkoutIndex);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const init = async () => {
-      try {
-        const savedActivePlanId = await AsyncStorage.getItem('@activePlanId');
-        if (savedActivePlanId) {
-          setActivePlan(savedActivePlanId);
-        }
-        const savedCurrentWorkoutIndex = await AsyncStorage.getItem(
-          '@currentWorkoutIndex'
-        );
-        console.log(savedCurrentWorkoutIndex);
-
-        if (
-          savedCurrentWorkoutIndex !== undefined &&
-          savedCurrentWorkoutIndex !== null
-        ) {
-          setCurrentWorkoutIndex(+savedCurrentWorkoutIndex);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
     init();
   }, []);
 
@@ -89,6 +90,7 @@ export const PlanProvider: React.FC = ({ children }) => {
   const values = {
     activePlanId,
     currentWorkoutIndex,
+    isLoading,
     setPlanAsActive,
     increaseCurrentWorkoutIndex,
     decreaseCurrentWorkoutIndex,
