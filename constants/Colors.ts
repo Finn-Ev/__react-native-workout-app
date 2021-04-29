@@ -7,6 +7,7 @@ const theme = {
   navigationBackground: 'teal',
   tintColor: 'white',
   accent: 'teal',
+  danger: '#b8291f',
 };
 
 export default {
@@ -17,6 +18,7 @@ export default {
   accent: theme.accent,
   tabIconDefault: '#eee',
   tabIconSelected: theme.tintColor,
+  danger: theme.danger,
 };
 
 export const NavigationColorTheme: { dark: Theme; light: Theme } = {

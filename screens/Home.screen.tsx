@@ -5,6 +5,7 @@ import Button from '../components/Button.component';
 import { fontSize, spacing } from '../constants';
 import { usePlanContext } from '../context/plan.context';
 import data from '../data';
+import { Workout } from '../types/data.types';
 import { HomeTabParamList } from '../types/navigation.types';
 import { Text } from '../utils/styles/DefaultComponents';
 import { defaultScreenStyles } from '../utils/styles/mixins';
@@ -15,7 +16,7 @@ interface HomeScreenProps {}
 const HomeScreen: React.FC<
   HomeScreenProps & StackScreenProps<HomeTabParamList, 'Home'>
 > = ({ navigation }) => {
-  const { activePlanId, currentWorkoutIndex } = usePlanContext();
+  const { activePlanId, currentWorkoutIndex, resetPlanData } = usePlanContext();
 
   const activePlan = data.find(plan => plan.id === activePlanId);
 
@@ -36,12 +37,16 @@ const HomeScreen: React.FC<
       <View style={styles.container}>
         <Text style={styles.declarativeHeadline}>Aktiver Plan:</Text>
         <Text style={styles.planName}> {activePlan.name}</Text>
-
         <Text style={styles.declarativeHeadline}>Anstehendes Workout:</Text>
         {upcomingWorkout && <WorkoutTile workout={upcomingWorkout} />}
         <Button
           title={'Training starten'}
           onPress={() => console.log('TRAINING STARTEN')}
+        />
+        <Button
+          type={'cancel'}
+          title={'Wipe data'}
+          onPress={() => resetPlanData!()}
         />
       </View>
     );

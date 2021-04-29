@@ -6,18 +6,25 @@ import Colors from '../constants/Colors';
 interface ButtonProps {
   title: string;
   onPress: () => void | undefined;
+  type?: 'cancel' | string;
 }
 
-const Button: React.FC<ButtonProps> = ({ title, onPress }) => {
+const Button: React.FC<ButtonProps> = ({ title, onPress, type }) => {
   return (
     <NbButton
       titleStyle={{ color: Colors.text }}
       containerStyle={{
         marginVertical: spacing.lg,
       }}
-      buttonStyle={{
-        backgroundColor: Colors.accent,
-      }}
+      buttonStyle={
+        type === 'cancel'
+          ? {
+              backgroundColor: Colors.danger,
+            }
+          : {
+              backgroundColor: Colors.accent,
+            }
+      }
       title={title}
       onPress={onPress}
     />
