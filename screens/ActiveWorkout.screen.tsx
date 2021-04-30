@@ -30,7 +30,7 @@ const ActiveWorkoutScreen: React.FC<
   const finishWorkout = () => {
     wipeActiveWorkout!();
     incrementCurrentWorkoutIndex!();
-    navigation.navigate('Home');
+    navigation.navigate('FinishedWorkout');
   };
 
   const cancelWorkout = () => {

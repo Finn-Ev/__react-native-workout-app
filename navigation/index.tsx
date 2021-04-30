@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 import { NavigationColorTheme } from '../constants/Colors';
+import { AppContextProvider } from '../context';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types/navigation.types';
 import BottomTabNavigator from './BottomTabNavigator';
@@ -22,7 +23,9 @@ export default function Navigation({
           : NavigationColorTheme.light
       }
     >
-      <RootNavigator />
+      <AppContextProvider>
+        <RootNavigator />
+      </AppContextProvider>
     </NavigationContainer>
   );
 }

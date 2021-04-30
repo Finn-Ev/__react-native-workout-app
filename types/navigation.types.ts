@@ -30,6 +30,7 @@ export type PlansTabParamList = {
 
 export type ActiveWorkoutTabParamList = {
   ActiveWorkout: undefined;
+  FinishedWorkout: undefined;
   Plans: undefined;
   Home: undefined;
 };

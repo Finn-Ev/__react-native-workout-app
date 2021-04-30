@@ -13,6 +13,7 @@ import { useActiveWorkoutContext } from '../context/activeWorkout.context';
 import plans from '../data';
 import ActiveWorkoutScreen from '../screens/ActiveWorkout.screen';
 import AllPlansScreen from '../screens/AllPlans/index.screen';
+import FinishedWorkoutScreen from '../screens/FinishedWorkout.screen';
 import HomeScreen from '../screens/Home.screen';
 import PlanDetailsScreen from '../screens/PlanDetails/index.screen';
 import SettingsScreen from '../screens/Settings.screen';
@@ -160,6 +161,13 @@ function ActiveWorkoutNavigator() {
           component={ActiveWorkoutScreen}
           options={{
             headerTitle: activeWorkoutData?.name || 'Workout App',
+          }}
+        />
+        <ActiveWorkoutTabStack.Screen
+          name="FinishedWorkout"
+          component={FinishedWorkoutScreen}
+          options={{
+            headerTitle: 'Workout App',
           }}
         />
       </ActiveWorkoutTabStack.Navigator>

@@ -78,7 +78,10 @@ const PlanDetailsScreen: React.FC<
       return (
         <Button
           title={'Nächstes Workout starten'}
-          onPress={() => startWorkout!(selectedPlan.id!, currentWorkoutIndex!)}
+          onPress={() => {
+            startWorkout!(selectedPlan.id!, currentWorkoutIndex!);
+            navigation.navigate('ActiveWorkout');
+          }}
         />
       );
     } else {
