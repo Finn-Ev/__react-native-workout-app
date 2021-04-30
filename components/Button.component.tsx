@@ -14,7 +14,7 @@ const Button: React.FC<ButtonProps> = ({ title, onPress, type }) => {
     <NbButton
       titleStyle={{ color: Colors.text }}
       containerStyle={{
-        marginVertical: spacing.lg,
+        marginTop: spacing.md,
       }}
       buttonStyle={
         type === 'cancel'

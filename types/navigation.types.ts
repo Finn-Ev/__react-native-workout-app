@@ -17,16 +17,19 @@ export type BottomTabParamList = {
 export type HomeTabParamList = {
   Home: undefined;
   Settings: undefined;
-  AllPlans: undefined;
+  Plans: undefined;
+  ActiveWorkout: undefined;
 };
 
 export type PlansTabParamList = {
   AllPlans: undefined;
   PlanDetails: { planId: string };
   Home: undefined;
+  ActiveWorkout: undefined;
 };
 
 export type ActiveWorkoutTabParamList = {
   ActiveWorkout: undefined;
+  Plans: undefined;
   Home: undefined;
 };

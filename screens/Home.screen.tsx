@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Button from '../components/Button.component';
 import { fontSize, spacing } from '../constants';
+import { useActiveWorkoutContext } from '../context/activeWorkout.context';
 import { usePlanContext } from '../context/plan.context';
 import data from '../data';
 import { Workout } from '../types/data.types';
@@ -23,9 +24,15 @@ const HomeScreen: React.FC<
     isLoading,
   } = usePlanContext();
 
+  const {
+    startWorkout,
+    wipeActiveWorkout,
+    activeWorkoutData,
+  } = useActiveWorkoutContext();
+
   const activePlan = data.find(plan => plan.id === activePlanId);
 
-  const upcomingWorkout = activePlan?.workouts[currentWorkoutIndex || 0];
+  const upcomingWorkout = activePlan?.workouts[currentWorkoutIndex!];
 
   if (isLoading) {
     return (
@@ -35,13 +42,22 @@ const HomeScreen: React.FC<
     );
   }
 
-  if (!activePlan)
+  if (activeWorkoutData?.name) {
+    return (
+      <View style={styles.container}>
+        <Button
+          title={'Zum aktiven Training'}
+          onPress={() => navigation.navigate('ActiveWorkout')}
+        />
+      </View>
+    );
+  } else if (!activePlan)
     return (
       <View style={styles.container}>
         <Text>Kein aktiver Plan</Text>
         <Button
           title={'Zu den Plänen'}
-          onPress={() => navigation.navigate('AllPlans')}
+          onPress={() => navigation.navigate('Plans')}
         />
       </View>
     );
@@ -54,12 +70,17 @@ const HomeScreen: React.FC<
         {upcomingWorkout && <WorkoutTile workout={upcomingWorkout} />}
         <Button
           title={'Training starten'}
-          onPress={() => console.log('TRAINING STARTEN')}
+          onPress={() => {
+            startWorkout!(activePlan.id, currentWorkoutIndex!);
+            navigation.navigate('ActiveWorkout');
+          }}
         />
         <Button
           type={'cancel'}
           title={'Wipe data'}
-          onPress={() => resetPlanData!()}
+          onPress={() => {
+            resetPlanData!(), wipeActiveWorkout!();
+          }}
         />
       </View>
     );

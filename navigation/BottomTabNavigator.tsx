@@ -9,6 +9,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { fontSize } from '../constants';
 import Colors from '../constants/Colors';
+import { useActiveWorkoutContext } from '../context/activeWorkout.context';
 import plans from '../data';
 import ActiveWorkoutScreen from '../screens/ActiveWorkout.screen';
 import AllPlansScreen from '../screens/AllPlans/index.screen';
@@ -150,13 +151,16 @@ function PlansNavigator() {
 const ActiveWorkoutTabStack = createStackNavigator<ActiveWorkoutTabParamList>();
 
 function ActiveWorkoutNavigator() {
+  const { activeWorkoutData } = useActiveWorkoutContext();
   return (
     <View style={{ backgroundColor: Colors.background, flex: 1 }}>
       <ActiveWorkoutTabStack.Navigator>
         <ActiveWorkoutTabStack.Screen
           name="ActiveWorkout"
           component={ActiveWorkoutScreen}
-          options={{ headerTitle: 'Legs #1' }}
+          options={{
+            headerTitle: activeWorkoutData?.name || 'Workout App',
+          }}
         />
       </ActiveWorkoutTabStack.Navigator>
     </View>

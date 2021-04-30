@@ -1,25 +1,32 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import data from '../data';
 
 type PlanContextType = {
   activePlanId: string;
   currentWorkoutIndex: number;
   isLoading: boolean;
+  activePlanName: string;
   setPlanAsActive: (planId: string) => void;
-  increaseCurrentWorkoutIndex: () => void;
-  decreaseCurrentWorkoutIndex: () => void;
+  incrementCurrentWorkoutIndex: () => void;
+  finishWorkout: () => void;
   resetPlanData: () => void;
 };
 
 export const PlanContext = createContext<Partial<PlanContextType>>({});
 
 export const usePlanContext = () => {
+  const context = useContext(PlanContext);
+  if (context === undefined) {
+    throw new Error('Use inside a Provider');
+  }
   return useContext(PlanContext);
 };
 
 export const PlanProvider: React.FC = ({ children }) => {
   const [activePlanId, setActivePlan] = useState('');
+  const [activePlanName, setActivePlanName] = useState('');
   const [currentWorkoutIndex, setCurrentWorkoutIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,7 +56,12 @@ export const PlanProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     try {
-      AsyncStorage.setItem('@activePlanId', activePlanId);
+      AsyncStorage.setItem('@activePlanId', activePlanId).then(() => {
+        if (activePlanId) {
+          const { name } = data.find(plan => plan.id === activePlanId)!;
+          setActivePlanName(name);
+        }
+      });
     } catch (error) {
       console.error(error);
     }
@@ -68,13 +80,17 @@ export const PlanProvider: React.FC = ({ children }) => {
     }
   }, [currentWorkoutIndex]);
 
-  const increaseCurrentWorkoutIndex = () => {
+  const incrementCurrentWorkoutIndex = () => {
     setCurrentWorkoutIndex(currentWorkoutIndex + 1);
   };
 
-  const decreaseCurrentWorkoutIndex = () => {
-    setCurrentWorkoutIndex(currentWorkoutIndex - 1);
+  const finishWorkout = () => {
+    setCurrentWorkoutIndex(currentWorkoutIndex + 1);
   };
+
+  // const decreaseCurrentWorkoutIndex = () => {
+  //   setCurrentWorkoutIndex(currentWorkoutIndex - 1);
+  // };
 
   const setPlanAsActive = (planId: string) => {
     setActivePlan(planId);
@@ -89,11 +105,12 @@ export const PlanProvider: React.FC = ({ children }) => {
 
   const values = {
     activePlanId,
+    activePlanName,
     currentWorkoutIndex,
     isLoading,
     setPlanAsActive,
-    increaseCurrentWorkoutIndex,
-    decreaseCurrentWorkoutIndex,
+    incrementCurrentWorkoutIndex,
+    finishWorkout,
     resetPlanData,
   };
   return <PlanContext.Provider value={values}>{children}</PlanContext.Provider>;

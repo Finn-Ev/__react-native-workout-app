@@ -4,6 +4,7 @@ import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import Button from '../../components/Button.component';
 import { fontSize, spacing } from '../../constants';
 import Colors from '../../constants/Colors';
+import { useActiveWorkoutContext } from '../../context/activeWorkout.context';
 import { usePlanContext } from '../../context/plan.context';
 import plans from '../../data';
 import { Workout } from '../../types/data.types';
@@ -16,7 +17,7 @@ interface PlanDetailsScreenProps {}
 
 const PlanDetailsScreen: React.FC<
   PlanDetailsScreenProps & StackScreenProps<PlansTabParamList, 'PlanDetails'>
-> = ({ route: { params } }) => {
+> = ({ navigation, route: { params } }) => {
   const selectedPlan = plans.find(plan => params.planId === plan.id);
 
   if (!selectedPlan) return null;
@@ -28,13 +29,16 @@ const PlanDetailsScreen: React.FC<
   const {
     activePlanId,
     setPlanAsActive,
-    increaseCurrentWorkoutIndex,
+    incrementCurrentWorkoutIndex,
+    currentWorkoutIndex,
   } = usePlanContext();
+
+  const { activeWorkoutData, startWorkout } = useActiveWorkoutContext();
 
   if (
     activePlanId === undefined ||
     setPlanAsActive === undefined ||
-    increaseCurrentWorkoutIndex === undefined
+    incrementCurrentWorkoutIndex === undefined
   ) {
     return null;
   }
@@ -61,19 +65,32 @@ const PlanDetailsScreen: React.FC<
     }
   };
 
-  const MainButton = () =>
-    activePlanId === selectedPlan.id ? (
-      <Button
-        title={'Nächstes Workout starten'}
-        // TODO: onPress={() => WORKOUT STARTEN}
-        onPress={increaseCurrentWorkoutIndex}
-      />
-    ) : (
-      <Button
-        title={'Als aktiv festlegen'}
-        onPress={handleActivatePlanRequest}
-      />
-    );
+  const MainButton = () => {
+    if (activeWorkoutData?.name) {
+      return (
+        <Button
+          title={'Zum aktiven Training'}
+          onPress={() => navigation.navigate('ActiveWorkout')}
+        />
+      );
+    } else if (activePlanId == selectedPlan.id) {
+      // no activeWorkout but user is on the page of the active plan
+      return (
+        <Button
+          title={'Nächstes Workout starten'}
+          onPress={() => startWorkout!(selectedPlan.id!, currentWorkoutIndex!)}
+        />
+      );
+    } else {
+      // no activeWorkout and user is not on the page of the active plan
+      return (
+        <Button
+          title={'Als aktiv festlegen'}
+          onPress={handleActivatePlanRequest}
+        />
+      );
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -105,11 +122,10 @@ const styles = StyleSheet.create({
     height: 0.5,
     width: '100%',
     backgroundColor: Colors.text,
-    marginTop: -2,
-    marginBottom: spacing.md,
+    marginVertical: spacing.md,
   },
   buttonContainer: {
-    marginBottom: 20,
+    marginBottom: 30,
   },
 });
 
