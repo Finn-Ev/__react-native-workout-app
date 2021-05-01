@@ -23,9 +23,7 @@ export default function Navigation({
           : NavigationColorTheme.light
       }
     >
-      <AppContextProvider>
-        <RootNavigator />
-      </AppContextProvider>
+      <RootNavigator />
     </NavigationContainer>
   );
 }

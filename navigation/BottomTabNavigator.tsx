@@ -38,12 +38,7 @@ export default function BottomTabNavigator() {
         options={{
           tabBarLabel: () => null,
           tabBarIcon: ({ color }) => (
-            <Ionicons
-              name="home"
-              size={30}
-              style={{ marginBottom: -3 }}
-              color={color}
-            />
+            <Ionicons name="home" size={30} color={color} />
           ),
         }}
       />
@@ -56,7 +51,6 @@ export default function BottomTabNavigator() {
             <MaterialCommunityIcons
               name="clipboard-list"
               size={30}
-              style={{ marginBottom: -3 }}
               color={color}
             />
           ),
@@ -68,12 +62,7 @@ export default function BottomTabNavigator() {
         options={{
           tabBarLabel: () => null,
           tabBarIcon: ({ color }) => (
-            <FontAwesome5
-              name="dumbbell"
-              size={28}
-              style={{ marginBottom: -3 }}
-              color={color}
-            />
+            <FontAwesome5 name="dumbbell" size={28} color={color} />
           ),
         }}
       />
@@ -101,7 +90,7 @@ function HomeNavigator() {
               <Ionicons
                 name={'settings-outline'}
                 color={'white'}
-                style={{ right: 10 }}
+                style={{ right: 10, paddingLeft: 50 }}
                 size={24}
                 onPress={() => navigation.navigate('Settings')}
               />

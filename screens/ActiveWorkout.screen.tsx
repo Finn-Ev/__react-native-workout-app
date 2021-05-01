@@ -17,7 +17,7 @@ const ActiveWorkoutScreen: React.FC<
 > = ({ navigation }) => {
   const {
     activeWorkoutData,
-    wipeActiveWorkout,
+    wipeActiveWorkoutData,
     startWorkout,
   } = useActiveWorkoutContext();
   const {
@@ -28,13 +28,13 @@ const ActiveWorkoutScreen: React.FC<
   } = usePlanContext();
 
   const finishWorkout = () => {
-    wipeActiveWorkout!();
+    wipeActiveWorkoutData!();
     incrementCurrentWorkoutIndex!();
     navigation.navigate('FinishedWorkout');
   };
 
   const cancelWorkout = () => {
-    wipeActiveWorkout!();
+    wipeActiveWorkoutData!();
     navigation.navigate('Home');
   };
 
@@ -78,14 +78,14 @@ const ActiveWorkoutScreen: React.FC<
             'Möchtest du das Training wirklich speichern und beenden?',
             [
               {
-                text: 'Training beenden',
-                onPress: finishWorkout,
-                style: 'default',
-              },
-              {
                 text: 'Zurück',
                 onPress: () => {},
                 style: 'cancel',
+              },
+              {
+                text: 'Training beenden',
+                onPress: finishWorkout,
+                style: 'default',
               },
             ]
           )
@@ -99,14 +99,14 @@ const ActiveWorkoutScreen: React.FC<
             'Möchtest du das Training wirklich abbrechen?',
             [
               {
-                text: 'Training abbrechen',
-                onPress: cancelWorkout,
-                style: 'destructive',
-              },
-              {
                 text: 'Zurück',
                 onPress: () => {},
                 style: 'cancel',
+              },
+              {
+                text: 'Training abbrechen',
+                onPress: cancelWorkout,
+                style: 'destructive',
               },
             ]
           )

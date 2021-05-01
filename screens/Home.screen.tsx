@@ -1,12 +1,11 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import Button from '../components/Button.component';
 import { fontSize, spacing } from '../constants';
 import { useActiveWorkoutContext } from '../context/activeWorkout.context';
 import { usePlanContext } from '../context/plan.context';
 import data from '../data';
-import { Workout } from '../types/data.types';
 import { HomeTabParamList } from '../types/navigation.types';
 import { Text } from '../utils/styles/DefaultComponents';
 import { defaultScreenStyles } from '../utils/styles/mixins';
@@ -26,7 +25,7 @@ const HomeScreen: React.FC<
 
   const {
     startWorkout,
-    wipeActiveWorkout,
+    wipeActiveWorkoutData,
     activeWorkoutData,
   } = useActiveWorkoutContext();
 
@@ -47,6 +46,7 @@ const HomeScreen: React.FC<
       <View style={styles.container}>
         <Button
           title={'Zum aktiven Training'}
+          buttonStyles={{ marginBottom: 30 }}
           onPress={() => navigation.navigate('ActiveWorkout')}
         />
       </View>
@@ -57,32 +57,27 @@ const HomeScreen: React.FC<
         <Text>Kein aktiver Plan</Text>
         <Button
           title={'Zu den Plänen'}
+          buttonStyles={{ marginBottom: 30 }}
           onPress={() => navigation.navigate('Plans')}
         />
       </View>
     );
   else
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.declarativeHeadline}>Aktiver Plan:</Text>
         <Text style={styles.planName}> {activePlan.name}</Text>
         <Text style={styles.declarativeHeadline}>Anstehendes Workout:</Text>
         {upcomingWorkout && <WorkoutTile workout={upcomingWorkout} />}
         <Button
+          buttonStyles={{ marginBottom: 30 }}
           title={'Training starten'}
           onPress={() => {
             startWorkout!(activePlan.id, currentWorkoutIndex!);
             navigation.navigate('ActiveWorkout');
           }}
         />
-        <Button
-          type={'cancel'}
-          title={'Wipe data'}
-          onPress={() => {
-            resetPlanData!(), wipeActiveWorkout!();
-          }}
-        />
-      </View>
+      </ScrollView>
     );
 };
 

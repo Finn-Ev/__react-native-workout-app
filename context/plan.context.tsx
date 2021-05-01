@@ -30,27 +30,26 @@ export const PlanProvider: React.FC = ({ children }) => {
   const [currentWorkoutIndex, setCurrentWorkoutIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  const init = async () => {
-    try {
-      setIsLoading(true);
-      const savedActivePlanId = await AsyncStorage.getItem('@activePlanId');
-      if (savedActivePlanId) {
-        setActivePlan(savedActivePlanId);
-      }
-      const savedCurrentWorkoutIndex = await AsyncStorage.getItem(
-        '@currentWorkoutIndex'
-      );
-      if (savedCurrentWorkoutIndex) {
-        setCurrentWorkoutIndex(+savedCurrentWorkoutIndex);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const init = async () => {
+      try {
+        setIsLoading(true);
+        const savedActivePlanId = await AsyncStorage.getItem('@activePlanId');
+        if (savedActivePlanId) {
+          setActivePlan(savedActivePlanId);
+        }
+        const savedCurrentWorkoutIndex = await AsyncStorage.getItem(
+          '@currentWorkoutIndex'
+        );
+        if (savedCurrentWorkoutIndex) {
+          setCurrentWorkoutIndex(+savedCurrentWorkoutIndex);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
     init();
   }, []);
 
@@ -87,10 +86,6 @@ export const PlanProvider: React.FC = ({ children }) => {
   const finishWorkout = () => {
     setCurrentWorkoutIndex(currentWorkoutIndex + 1);
   };
-
-  // const decreaseCurrentWorkoutIndex = () => {
-  //   setCurrentWorkoutIndex(currentWorkoutIndex - 1);
-  // };
 
   const setPlanAsActive = (planId: string) => {
     setActivePlan(planId);

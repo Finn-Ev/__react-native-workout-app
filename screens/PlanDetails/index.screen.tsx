@@ -50,13 +50,13 @@ const PlanDetailsScreen: React.FC<
         'Wenn du diesen Plan aktivierst, geht der Fortschritt im aktuellen Plan verloren. Bist du sicher?',
         [
           {
+            text: 'Plan aktivieren',
+            onPress: () => setPlanAsActive(selectedPlan.id),
+          },
+          {
             text: 'Abbrechen',
             onPress: () => {},
             style: 'cancel',
-          },
-          {
-            text: 'Plan aktivieren',
-            onPress: () => setPlanAsActive(selectedPlan.id),
           },
         ]
       );
