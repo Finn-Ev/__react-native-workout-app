@@ -16,18 +16,9 @@ interface HomeScreenProps {}
 const HomeScreen: React.FC<
   HomeScreenProps & StackScreenProps<HomeTabParamList, 'Home'>
 > = ({ navigation }) => {
-  const {
-    activePlanId,
-    currentWorkoutIndex,
-    resetPlanData,
-    isLoading,
-  } = usePlanContext();
+  const { activePlanId, currentWorkoutIndex, isLoading } = usePlanContext();
 
-  const {
-    startWorkout,
-    wipeActiveWorkoutData,
-    activeWorkoutData,
-  } = useActiveWorkoutContext();
+  const { startWorkout, activeWorkoutData } = useActiveWorkoutContext();
 
   const activePlan = data.find(plan => plan.id === activePlanId);
 
@@ -51,7 +42,7 @@ const HomeScreen: React.FC<
         />
       </View>
     );
-  } else if (!activePlan)
+  } else if (!activePlan) {
     return (
       <View style={styles.container}>
         <Text>Kein aktiver Plan</Text>
@@ -62,7 +53,7 @@ const HomeScreen: React.FC<
         />
       </View>
     );
-  else
+  } else {
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.declarativeHeadline}>Aktiver Plan:</Text>
@@ -79,6 +70,7 @@ const HomeScreen: React.FC<
         />
       </ScrollView>
     );
+  }
 };
 
 const styles = StyleSheet.create({

@@ -1,13 +1,15 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
-import Button from '../components/Button.component';
-import { fontSize, spacing } from '../constants';
-import { useActiveWorkoutContext } from '../context/activeWorkout.context';
-import { usePlanContext } from '../context/plan.context';
-import { ActiveWorkoutTabParamList } from '../types/navigation.types';
-import { Text } from '../utils/styles/DefaultComponents';
-import { defaultScreenStyles } from '../utils/styles/mixins';
+import Button from '../../components/Button.component';
+import { fontSize, spacing } from '../../constants';
+import { useActiveWorkoutContext } from '../../context/activeWorkout.context';
+import { usePlanContext } from '../../context/plan.context';
+import data from '../../data';
+import { ActiveWorkoutTabParamList } from '../../types/navigation.types';
+import { Text } from '../../utils/styles/DefaultComponents';
+import { defaultScreenStyles } from '../../utils/styles/mixins';
+import Exercise from './Exercise.component';
 
 interface ActiveWorkoutScreenProps {}
 
@@ -67,10 +69,17 @@ const ActiveWorkoutScreen: React.FC<
     );
   }
 
+  const { exercises } = data.find(plan => plan.id === activePlanId)?.workouts[
+    currentWorkoutIndex!
+  ]!;
+
   return (
     <View style={styles.container}>
       <Text>ActiveWorkout</Text>
       <Text>workout Name: {activeWorkoutData?.name}</Text>
+      {exercises.map(exercise => (
+        <Exercise key={exercise.name} exercise={exercise} />
+      ))}
       <Button
         onPress={() =>
           Alert.alert(

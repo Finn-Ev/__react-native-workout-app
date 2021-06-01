@@ -10,7 +10,7 @@ type ActiveWorkoutData = {
 
 type ActiveWorkoutContextType = {
   activeWorkoutData: ActiveWorkoutData; // basic info about the activeWorkout
-  progress: {};
+  workoutProgress: {};
   startWorkout: (planId: string, workoutIndex: number) => void;
   wipeActiveWorkoutData: () => void;
 };
@@ -98,7 +98,7 @@ const ActiveWorkoutProvider: React.FC = ({ children }) => {
 
   const values = {
     activeWorkoutData,
-    progress: workoutProgress,
+    workoutProgress,
     startWorkout,
     wipeActiveWorkoutData,
   };

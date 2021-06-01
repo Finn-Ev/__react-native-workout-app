@@ -11,7 +11,7 @@ import { fontSize } from '../constants';
 import Colors from '../constants/Colors';
 import { useActiveWorkoutContext } from '../context/activeWorkout.context';
 import plans from '../data';
-import ActiveWorkoutScreen from '../screens/ActiveWorkout.screen';
+import ActiveWorkoutScreen from '../screens/ActiveWorkout/index.screen';
 import AllPlansScreen from '../screens/AllPlans/index.screen';
 import FinishedWorkoutScreen from '../screens/FinishedWorkout.screen';
 import HomeScreen from '../screens/Home.screen';
